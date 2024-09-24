@@ -3,6 +3,7 @@ export default {
   darkMode: ["class"],
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
+    fluidTypography: {},
     extend: {
       borderRadius: {
         lg: "var(--radius)",
@@ -53,5 +54,8 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("tailwind-fluid-typography"),
+  ],
 };
