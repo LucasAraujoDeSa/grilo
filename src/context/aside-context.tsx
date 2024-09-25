@@ -16,7 +16,9 @@ type AsideProviderProps = {
 export function AsideProvider({ children }: AsideProviderProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const toggleAside = () => setIsOpen((prevIsOpen) => !prevIsOpen);
+  const toggleAside = () => {
+    setIsOpen((prevIsOpen) => !prevIsOpen);
+  };
 
   return (
     <AsideContext.Provider value={{ isOpen, toggleAside }}>

@@ -1,9 +1,21 @@
 import { AsideContext } from "@/context/aside-context";
+import { EmployeeMenu } from "@/pages/dashboard/submenus/employees";
+import { ItensMenu } from "@/pages/dashboard/submenus/itens";
+import { OrderMenu } from "@/pages/dashboard/submenus/orders";
 import { BookIcon, FileTextIcon, LogOutIcon, UserIcon, X } from "lucide-react";
-import { useContext } from "react";
+import { ReactNode, useContext } from "react";
 
-export function Aside() {
+type AsideProps = {
+  handleChangeMenu: (menu: ReactNode) => void;
+};
+
+export function Aside({ handleChangeMenu }: AsideProps) {
   const { isOpen, toggleAside } = useContext(AsideContext);
+
+  const handleMenu = (menu: ReactNode) => {
+    toggleAside();
+    handleChangeMenu(menu);
+  };
 
   return (
     <aside
@@ -18,15 +30,24 @@ export function Aside() {
         </div>
         <div>
           <ul className="p-4 space-y-4">
-            <li className="flex cursor-pointer hover:opacity-25">
+            <li
+              className="flex cursor-pointer hover:opacity-25"
+              onClick={() => handleMenu(<ItensMenu />)}
+            >
               <BookIcon className="mr-4" />
               <span>Itens</span>
             </li>
-            <li className="flex cursor-pointer hover:opacity-25">
+            <li
+              className="flex cursor-pointer hover:opacity-25"
+              onClick={() => handleMenu(<OrderMenu />)}
+            >
               <FileTextIcon className="mr-4" />
               <span>Orders</span>
             </li>
-            <li className="flex cursor-pointer hover:opacity-25">
+            <li
+              className="flex cursor-pointer hover:opacity-25"
+              onClick={() => handleMenu(<EmployeeMenu />)}
+            >
               <UserIcon className="mr-4" />
               <span>Employees</span>
             </li>

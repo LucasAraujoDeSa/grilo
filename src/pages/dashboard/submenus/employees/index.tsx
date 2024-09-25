@@ -1,0 +1,12 @@
+import { DataTable } from "@/components/data-table";
+import { employeeData } from "@/data/employee-data";
+import { employeesColumns } from "./employees-columns";
+
+export function EmployeeMenu() {
+  return (
+    <div className="pb-4">
+      <h1 className="pb-4 text-2xl font-bold">Employees</h1>
+      <DataTable columns={employeesColumns} data={employeeData} />
+    </div>
+  );
+}
