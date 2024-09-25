@@ -29,7 +29,7 @@ export function Aside({ handleChangeMenu }: AsideProps) {
           <X className="lg:hidden" onClick={() => toggleAside()} />
         </div>
         <div>
-          <ul className="p-4 space-y-4">
+          <ul className="p-4 space-y-4 fluid-md">
             <li
               className="flex cursor-pointer hover:opacity-25"
               onClick={() => handleMenu(<ItensMenu />)}
