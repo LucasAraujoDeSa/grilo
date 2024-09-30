@@ -17,15 +17,18 @@ import {
   TableRow,
 } from "./ui/table";
 import { Button } from "./ui/button";
+import BounceLoader from "react-spinners/BounceLoader";
 
 type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  isLoading: boolean;
 };
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  isLoading,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
 
@@ -62,6 +65,7 @@ export function DataTable<TData, TValue>({
             </TableRow>
           ))}
         </TableHeader>
+
         <TableBody>
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
@@ -79,7 +83,17 @@ export function DataTable<TData, TValue>({
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
+                {isLoading ? (
+                  <div className="flex justify-center items-center">
+                    <BounceLoader
+                      className="text-center"
+                      loading={isLoading}
+                      color="#379412"
+                    />
+                  </div>
+                ) : (
+                  "No results"
+                )}
               </TableCell>
             </TableRow>
           )}

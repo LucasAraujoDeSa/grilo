@@ -1,10 +1,10 @@
 import { ReactNode, useState } from "react";
-import { Aside } from "./components/aside";
-import { Navbar } from "./components/navbar";
-import { AsideProvider } from "./context/aside-context";
-import { ItensMenu } from "./pages/dashboard/submenus/itens";
+import { ItensMenu } from "./submenus/itens";
+import { AsideProvider } from "@/context/aside-context";
+import { Aside } from "@/components/aside";
+import { Navbar } from "@/components/navbar";
 
-function App() {
+function DashboardPage() {
   const [currentMenu, setCurrentMenu] = useState<ReactNode>(<ItensMenu />);
 
   const handleChangeMenu = (section: ReactNode) => {
@@ -24,4 +24,4 @@ function App() {
   );
 }
 
-export default App;
+export default DashboardPage;

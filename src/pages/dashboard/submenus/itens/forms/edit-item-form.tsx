@@ -9,37 +9,49 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useState } from "react";
-import { newItemFormSchema } from "../schemas/new-item-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { NewItemDTO } from "../dtos/new-item-dto";
 import { toast } from "react-toastify";
-import { createItem } from "../services/item-service";
+import { updateItem } from "../services/item-service";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { EditItemDTO } from "../dtos/edit-item-dto";
+import { editItemFormSchema } from "../schemas/edit-item-schema";
+import { Item } from "@/@types/item";
+import { useState } from "react";
 
-export function NewItemFormDialog() {
-  const [open, setOpen] = useState<boolean>(false);
+type EditItemFormDialogProps = {
+  item: Item;
+};
+
+export function EditItemFormDialog({ item }: EditItemFormDialogProps) {
+  const [open, setOpen] = useState<boolean>();
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<NewItemDTO>({
-    resolver: zodResolver(newItemFormSchema),
+  } = useForm<EditItemDTO>({
+    resolver: zodResolver(editItemFormSchema),
+    mode: "onChange",
+    defaultValues: {
+      id: item.id.toString(),
+      price: item.price,
+      quantity: item.quantity,
+      title: item.title,
+    },
   });
   const query = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: createItem,
+    mutationFn: updateItem,
     mutationKey: ["itens"],
     onSuccess: () => {
       query.invalidateQueries({ queryKey: ["itens"] });
     },
   });
 
-  const onSubmit: SubmitHandler<NewItemDTO> = async (data) => {
-    mutation.mutate(data);
-    toast.success("Item saved successfully");
+  const onSubmit: SubmitHandler<EditItemDTO> = async (data) => {
+    mutation.mutate({ ...data, id: item.id.toString() });
+    toast.success("Item updated successfully");
     reset();
     setOpen(false);
   };
@@ -51,11 +63,13 @@ export function NewItemFormDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-green-500 hover:bg-green-600">Add</Button>
+        <p className="cursor-pointer relative flex select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+          Edit
+        </p>
       </DialogTrigger>
       <DialogContent className="w-11/12 sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>New item</DialogTitle>
+          <DialogTitle>Edit item</DialogTitle>
         </DialogHeader>
         <div>
           <form>
