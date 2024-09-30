@@ -10,13 +10,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "react-toastify";
-import { updateItem } from "../services/item-service";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { EditItemDTO } from "../dtos/edit-item-dto";
 import { editItemFormSchema } from "../schemas/edit-item-schema";
 import { Item } from "@/@types/item";
 import { useState } from "react";
+import { useEditItem } from "../hooks/use-edit-item";
+import { Loader2Icon } from "lucide-react";
 
 type EditItemFormDialogProps = {
   item: Item;
@@ -24,6 +23,7 @@ type EditItemFormDialogProps = {
 
 export function EditItemFormDialog({ item }: EditItemFormDialogProps) {
   const [open, setOpen] = useState<boolean>();
+  const { mutateAsync, isPending } = useEditItem();
   const {
     register,
     handleSubmit,
@@ -39,20 +39,12 @@ export function EditItemFormDialog({ item }: EditItemFormDialogProps) {
       title: item.title,
     },
   });
-  const query = useQueryClient();
-
-  const mutation = useMutation({
-    mutationFn: updateItem,
-    mutationKey: ["itens"],
-    onSuccess: () => {
-      query.invalidateQueries({ queryKey: ["itens"] });
-    },
-  });
 
   const onSubmit: SubmitHandler<EditItemDTO> = async (data) => {
-    mutation.mutate({ ...data, id: item.id.toString() });
-    toast.success("Item updated successfully");
+    console.log(isPending);
+    await mutateAsync({ ...data, id: item.id.toString() });
     reset();
+    setTimeout(() => {}, 100000000);
     setOpen(false);
   };
   const onCancel = () => {
@@ -114,6 +106,7 @@ export function EditItemFormDialog({ item }: EditItemFormDialogProps) {
             type="submit"
             onClick={handleSubmit(onSubmit)}
           >
+            {isPending && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />}{" "}
             Submit
           </Button>
         </DialogFooter>

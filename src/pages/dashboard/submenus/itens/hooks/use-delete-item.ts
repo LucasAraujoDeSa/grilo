@@ -8,7 +8,8 @@ export function useDeleteItem() {
   const mutation = useMutation({
     mutationFn: deleteItem,
     onMutate: () => {
-      toast.info("Deleting...");
+      toast.dismiss();
+      toast.loading("Deleting...");
     },
     onSuccess: () => {
       toast.dismiss();

@@ -11,7 +11,7 @@ export function ItensMenu() {
 
   if (error) {
     toast.dismiss();
-    toast.error("Internal error, try again later!!!");
+    toast.error(data?.message);
   }
 
   const columns = useMemo(() => getItensColumns(), []);
@@ -23,7 +23,7 @@ export function ItensMenu() {
       </div>
       <DataTable
         columns={columns}
-        data={data !== undefined ? (data as Item[]) : []}
+        data={data !== undefined ? (data.content as Item[]) : []}
         isLoading={isLoading}
       />
     </div>

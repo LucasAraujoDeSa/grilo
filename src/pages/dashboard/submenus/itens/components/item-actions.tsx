@@ -17,7 +17,10 @@ type ItemActionsProps = {
 };
 
 export function ItemActions({ data }: ItemActionsProps) {
-  const { mutate } = useDeleteItem();
+  const { mutateAsync } = useDeleteItem();
+  const onDelete = async () => {
+    await mutateAsync(data.original.id.toString());
+  };
 
   return (
     <DropdownMenu>
@@ -31,7 +34,7 @@ export function ItemActions({ data }: ItemActionsProps) {
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <DropdownMenuItem
           className="text-red-600 cursor-pointer"
-          onClick={() => mutate(data.original.id.toString())}
+          onClick={() => onDelete()}
         >
           Delete
         </DropdownMenuItem>

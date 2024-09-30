@@ -13,12 +13,12 @@ import { useState } from "react";
 import { newItemFormSchema } from "../schemas/new-item-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { NewItemDTO } from "../dtos/new-item-dto";
-import { toast } from "react-toastify";
-import { createItem } from "../services/item-service";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAddItem } from "../hooks/use-add-item";
+import { Loader2Icon } from "lucide-react";
 
 export function NewItemFormDialog() {
   const [open, setOpen] = useState<boolean>(false);
+  const { mutateAsync, isPending } = useAddItem();
   const {
     register,
     handleSubmit,
@@ -27,19 +27,9 @@ export function NewItemFormDialog() {
   } = useForm<NewItemDTO>({
     resolver: zodResolver(newItemFormSchema),
   });
-  const query = useQueryClient();
-
-  const mutation = useMutation({
-    mutationFn: createItem,
-    mutationKey: ["itens"],
-    onSuccess: () => {
-      query.invalidateQueries({ queryKey: ["itens"] });
-    },
-  });
 
   const onSubmit: SubmitHandler<NewItemDTO> = async (data) => {
-    mutation.mutate(data);
-    toast.success("Item saved successfully");
+    await mutateAsync(data);
     reset();
     setOpen(false);
   };
@@ -100,6 +90,7 @@ export function NewItemFormDialog() {
             type="submit"
             onClick={handleSubmit(onSubmit)}
           >
+            {isPending && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />}{" "}
             Submit
           </Button>
         </DialogFooter>
