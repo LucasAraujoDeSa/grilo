@@ -5,9 +5,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+} from "@/shared/components/ui/dialog";
+import { Button } from "@/shared/components/ui/button";
+import { Input } from "@/shared/components/ui/input";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EditItemDTO } from "../dtos/edit-item-dto";
@@ -102,7 +102,7 @@ export function EditItemFormDialog({ item }: EditItemFormDialogProps) {
             Cancel
           </Button>
           <Button
-            className="bg-green-500 hover:bg-green-600 my-1"
+            className="my-1"
             type="submit"
             onClick={handleSubmit(onSubmit)}
           >

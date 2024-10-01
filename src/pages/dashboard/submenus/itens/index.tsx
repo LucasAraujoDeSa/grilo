@@ -1,4 +1,4 @@
-import { DataTable } from "@/components/data-table";
+import { DataTable } from "@/shared/components/data-table";
 import { getItensColumns } from "./itens-columns";
 import { NewItemFormDialog } from "./forms/new-item-form";
 import { useItensData } from "./hooks/use-itens-data";
@@ -11,7 +11,7 @@ export function ItensMenu() {
 
   if (error) {
     toast.dismiss();
-    toast.error(data?.message);
+    toast.error("Internal error, please try again later");
   }
 
   const columns = useMemo(() => getItensColumns(), []);

@@ -1,4 +1,4 @@
-import { AsideContext } from "@/context/aside-context";
+import { AsideContext } from "@/shared/context/aside-context";
 import { EmployeeMenu } from "@/pages/dashboard/submenus/employees";
 import { ItensMenu } from "@/pages/dashboard/submenus/itens";
 import { OrderMenu } from "@/pages/dashboard/submenus/orders";

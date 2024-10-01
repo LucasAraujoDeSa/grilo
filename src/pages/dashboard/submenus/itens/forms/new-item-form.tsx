@@ -5,9 +5,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+} from "@/shared/components/ui/dialog";
+import { Button } from "@/shared/components/ui/button";
+import { Input } from "@/shared/components/ui/input";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
 import { newItemFormSchema } from "../schemas/new-item-schema";
@@ -41,7 +41,7 @@ export function NewItemFormDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-green-500 hover:bg-green-600">Add</Button>
+        <Button>Add</Button>
       </DialogTrigger>
       <DialogContent className="w-11/12 sm:max-w-[425px]">
         <DialogHeader>
@@ -86,7 +86,7 @@ export function NewItemFormDialog() {
             Cancel
           </Button>
           <Button
-            className="bg-green-500 hover:bg-green-600 my-1"
+            className="my-1"
             type="submit"
             onClick={handleSubmit(onSubmit)}
           >

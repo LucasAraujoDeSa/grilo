@@ -1,6 +1,6 @@
 import { Item } from "@/@types/item";
 import { ColumnDef } from "@tanstack/react-table";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import { ItemActions } from "./components/item-actions";
 

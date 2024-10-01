@@ -1,8 +1,8 @@
 import { ReactNode, useState } from "react";
 import { ItensMenu } from "./submenus/itens";
-import { AsideProvider } from "@/context/aside-context";
-import { Aside } from "@/components/aside";
-import { Navbar } from "@/components/navbar";
+import { AsideProvider } from "@/shared/context/aside-context";
+import { Aside } from "@/shared/components/aside";
+import { Navbar } from "@/shared/components/navbar";
 
 function DashboardPage() {
   const [currentMenu, setCurrentMenu] = useState<ReactNode>(<ItensMenu />);
@@ -15,7 +15,7 @@ function DashboardPage() {
     <>
       <AsideProvider>
         <Aside handleChangeMenu={handleChangeMenu} />
-        <Navbar />
+        <Navbar hasAside />
         <main className="lg:pl-72 pt-20">
           <div className="p-4">{currentMenu}</div>
         </main>

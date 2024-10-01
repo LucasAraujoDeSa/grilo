@@ -1,5 +1,5 @@
 import { Item } from "@/@types/item";
-import { api } from "@/services/api";
+import { api } from "@/shared/services/api";
 import { NewItemDTO } from "../dtos/new-item-dto";
 import { EditItemDTO } from "../dtos/edit-item-dto";
 import { ResponseResult } from "@/@types/response-result";

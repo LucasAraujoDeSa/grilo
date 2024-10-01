@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { HomePage } from "./pages/home";
 import DashboardPage from "./pages/dashboard";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { SignupPage } from "./pages/signup";
 
 const queryClient = new QueryClient();
 
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <HomePage />,
+  },
+  {
+    path: "/signup",
+    element: <SignupPage />,
   },
   {
     path: "/dashboard",
