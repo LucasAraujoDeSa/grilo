@@ -2,8 +2,16 @@ import { AsideContext } from "@/shared/context/aside-context";
 import { EmployeeMenu } from "@/pages/dashboard/submenus/employees";
 import { ItensMenu } from "@/pages/dashboard/submenus/itens";
 import { OrderMenu } from "@/pages/dashboard/submenus/orders";
-import { BookIcon, FileTextIcon, LogOutIcon, UserIcon, X } from "lucide-react";
+import {
+  BookIcon,
+  FileTextIcon,
+  Loader2Icon,
+  LogOutIcon,
+  UserIcon,
+  X,
+} from "lucide-react";
 import { ReactNode, useContext } from "react";
+import { useSignout } from "../hooks/use-signout";
 
 type AsideProps = {
   handleChangeMenu: (menu: ReactNode) => void;
@@ -11,10 +19,15 @@ type AsideProps = {
 
 export function Aside({ handleChangeMenu }: AsideProps) {
   const { isOpen, toggleAside } = useContext(AsideContext);
+  const { mutate, isPending } = useSignout();
 
   const handleMenu = (menu: ReactNode) => {
     toggleAside();
     handleChangeMenu(menu);
+  };
+
+  const handleSignout = () => {
+    mutate();
   };
 
   return (
@@ -54,9 +67,13 @@ export function Aside({ handleChangeMenu }: AsideProps) {
           </ul>
         </div>
       </div>
-      <div className="flex p-4 space-x-2 hover:opacity-25 cursor-pointer">
+      <div
+        className="flex p-4 space-x-2 hover:opacity-25 cursor-pointer items-center"
+        onClick={() => handleSignout()}
+      >
         <LogOutIcon />
         <h3>SignOut</h3>
+        {isPending && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />}
       </div>
     </aside>
   );

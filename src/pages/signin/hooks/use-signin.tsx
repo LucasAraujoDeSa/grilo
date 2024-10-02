@@ -1,15 +1,15 @@
 import { useMutation } from "@tanstack/react-query";
-import { signup } from "../services/signup-service";
+import { signin } from "../services/signin-service";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { api } from "@/shared/services/api";
 import { ensureAccess } from "@/shared/functions/ensure-access";
 
-export function useSignup() {
+export function useSignin() {
   const navigate = useNavigate();
 
   const mutation = useMutation({
-    mutationFn: signup,
+    mutationFn: signin,
     mutationKey: ["account"],
     onSuccess: (result) => {
       toast.dismiss();
