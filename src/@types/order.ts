@@ -1,6 +1,7 @@
 export type Order = {
-    id: number;
-    orderNum: string;
-    quantity: number;
-    amount: number;
+  id: string;
+  orderNum: string;
+  quantity: number;
+  amount: number;
+  status: string;
 };

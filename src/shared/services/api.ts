@@ -5,7 +5,7 @@ import { ensureAccess } from "../functions/ensure-access";
 
 export const api = axios.create({
   baseURL:
-    "https://452a-2804-8b08-206-9a00-8896-1e26-6caf-414f.ngrok-free.app/",
+    "https://7a5b-2804-8b08-204-b400-c142-27ec-daee-926a.ngrok-free.app/",
   headers: {
     "ngrok-skip-browser-warning": "false",
   },
@@ -24,15 +24,15 @@ api.interceptors.response.use(
 
       try {
         const refreshToken = Cookies.get("@refresh_token");
-        const response = await axios.post("api/Account/RefreshToken", {
+        const response = await api.post("api/Account/RefreshToken", {
           refreshToken: refreshToken,
         });
-
+        console.log(response.data);
         revogateAccess();
         ensureAccess({
           accessToken: response.data.content.accessToken,
           refreshToken: response.data.content.refreshToken,
-          username: response.data.content.username,
+          username: response.data.content.userName,
         });
 
         originalRequest.headers.Authorization = `Bearer ${response.data.content.accessToken}`;

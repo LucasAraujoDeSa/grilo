@@ -66,6 +66,12 @@ export function SigninPage() {
               )}{" "}
               Submit
             </Button>
+
+            <div className="mt-2">
+              <span>
+                <a href="/signup">Create account</a>
+              </span>
+            </div>
           </div>
         </form>
       </main>

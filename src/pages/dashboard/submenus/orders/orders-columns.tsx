@@ -1,14 +1,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/shared/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/shared/components/ui/dropdown-menu";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
 import { Order } from "@/@types/order";
+import { OrdersActions } from "./components/orders-action";
 
 export const OrdersColumns: ColumnDef<Order>[] = [
   {
@@ -76,27 +70,29 @@ export const OrdersColumns: ColumnDef<Order>[] = [
     },
   },
   {
-    id: "actions",
-    cell: () => {
+    accessorKey: "status",
+    header: ({ column }) => {
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem className="text-red-600 cursor-pointer">
-              Cancel
-            </DropdownMenuItem>
-            <DropdownMenuItem className="text-green-600 cursor-pointer">
-              Done
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="p-0"
+        >
+          Status
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
       );
     },
+    cell: ({ row }) => {
+      const status = row.getValue("status");
+      return <div>{String(status).toLocaleLowerCase()}</div>;
+    },
+  },
+  {
+    id: "actions",
+    cell: ({ row }) =>
+      OrdersActions({
+        data: row,
+      }),
   },
 ];
